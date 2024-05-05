@@ -80,7 +80,7 @@ object SP {
         set(value) = sp.edit().putString(KEY_CONFIG, value).apply()
 
     var configAutoLoad: Boolean
-        get() = sp.getBoolean(KEY_CONFIG_AUTO_LOAD, false)
+        get() = sp.getBoolean(KEY_CONFIG_AUTO_LOAD, true)
         set(value) = sp.edit().putBoolean(KEY_CONFIG_AUTO_LOAD, value).apply()
 
     var channel: Int

@@ -54,6 +54,10 @@ object TVList {
             Toast.makeText(context, "读取频道失败，请在菜单中进行设置", Toast.LENGTH_LONG).show()
         }
 
+        if (SP.config.isNullOrEmpty()){
+            SP.config="https://www.lgdhh.top/tv/channels.json"
+        }
+
         if (SP.configAutoLoad && !SP.config.isNullOrEmpty()) {
             SP.config?.let {
                 update(it)

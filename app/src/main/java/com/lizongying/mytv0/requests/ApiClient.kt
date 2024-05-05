@@ -92,6 +92,6 @@ class ApiClient {
     }
 
     companion object {
-        const val HOST = "https://gitee.com/lizongying/my-tv-0/"
+        const val HOST = "https://raw.githubusercontent.com/LGDhuanghe/my-tv-0/"
     }
 }

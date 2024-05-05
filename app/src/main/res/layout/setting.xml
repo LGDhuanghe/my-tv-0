@@ -119,6 +119,7 @@
             android:layout_marginTop="0dp"
             android:text="@string/appreciate"
             android:textSize="14sp"
+            android:visibility="gone"
             />
         <Button
             android:id="@+id/exit"
