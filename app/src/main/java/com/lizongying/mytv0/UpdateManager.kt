@@ -66,7 +66,7 @@ class UpdateManager(
 
     fun checkAndUpdate() {
         Log.i(TAG, "checkAndUpdate")
-        CoroutineScope(Dispatchers.Main).launch {
+        /*CoroutineScope(Dispatchers.Main).launch {
             var text = "版本获取失败"
             var update = false
             try {
@@ -84,7 +84,7 @@ class UpdateManager(
                 Log.e(TAG, "Error occurred: ${e.message}", e)
             }
             updateUI(text, update)
-        }
+        }*/
     }
 
     private fun updateUI(text: String, update: Boolean) {

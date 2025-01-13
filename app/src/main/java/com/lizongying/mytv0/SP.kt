@@ -61,17 +61,16 @@ object SP {
     private const val KEY_SOFT_DECODE = "soft_decode"
 
     const val DEFAULT_CHANNEL_REVERSAL = false
-    const val DEFAULT_CHANNEL_NUM = false
-    const val DEFAULT_TIME = true
+    const val DEFAULT_CONFIG_URL = "http://www.lgdhh.top/tv/channels.json"
+    const val DEFAULT_CHANNEL_NUM = true
+    const val DEFAULT_TIME = false
     const val DEFAULT_BOOT_STARTUP = false
-    const val DEFAULT_CONFIG_URL = ""
     const val DEFAULT_PROXY = ""
-    const val DEFAULT_EPG =
-        "https://live.fanmingming.cn/e.xml,https://raw.githubusercontent.com/fanmingming/live/main/e.xml"
-    const val DEFAULT_CHANNEL = 0
+    const val DEFAULT_EPG = ""
+    const val DEFAULT_CHANNEL = 1
     const val DEFAULT_SHOW_ALL_CHANNELS = false
     const val DEFAULT_COMPACT_MENU = true
-    const val DEFAULT_DISPLAY_SECONDS = true
+    const val DEFAULT_DISPLAY_SECONDS = false
     const val DEFAULT_LOG_TIMES = 10
     const val DEFAULT_SOFT_DECODE = false
 
@@ -79,7 +78,7 @@ object SP {
     const val DEFAULT_POSITION_GROUP = 1
     const val DEFAULT_POSITION = 0
     const val DEFAULT_REPEAT_INFO = true
-    const val DEFAULT_CONFIG_AUTO_LOAD = false
+    const val DEFAULT_CONFIG_AUTO_LOAD = true
     var DEFAULT_SOURCES = ""
 
     private lateinit var sp: SharedPreferences
