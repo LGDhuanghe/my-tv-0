@@ -1,5 +1,6 @@
 package com.lizongying.mytv0
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -19,11 +20,15 @@ import androidx.media3.common.VideoSize
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.DefaultRenderersFactory
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.Renderer
+import androidx.media3.exoplayer.audio.AudioRendererEventListener
+import androidx.media3.exoplayer.audio.AudioSink
 import androidx.media3.exoplayer.mediacodec.MediaCodecSelector
 import androidx.media3.exoplayer.mediacodec.MediaCodecUtil
 import com.lizongying.mytv0.data.SourceType
 import com.lizongying.mytv0.databinding.PlayerBinding
 import com.lizongying.mytv0.models.TVModel
+import java.util.ArrayList
 
 
 class PlayerFragment : Fragment() {
@@ -63,7 +68,7 @@ class PlayerFragment : Fragment() {
 
         val playerView = binding.playerView
 
-        val renderersFactory = DefaultRenderersFactory(ctx)
+        val renderersFactory = CustomRenderersFactory(ctx)
         val playerMediaCodecSelector = PlayerMediaCodecSelector()
         renderersFactory.setMediaCodecSelector(playerMediaCodecSelector)
         renderersFactory.setExtensionRendererMode(
@@ -192,6 +197,31 @@ class PlayerFragment : Fragment() {
                 prepare()
                 break
             }
+        }
+    }
+
+    @OptIn(UnstableApi::class)
+    class CustomRenderersFactory(context: Context) : DefaultRenderersFactory(context) {
+        override fun buildAudioRenderers(
+            context: Context,
+            extensionRendererMode: Int,
+            mediaCodecSelector: MediaCodecSelector,
+            enableDecoderFallback: Boolean,
+            audioSink: AudioSink,
+            eventHandler: Handler,
+            eventListener: AudioRendererEventListener,
+            out: ArrayList<Renderer>
+        ) {
+            super.buildAudioRenderers(
+                context,
+                EXTENSION_RENDERER_MODE_PREFER,
+                mediaCodecSelector,
+                enableDecoderFallback,
+                audioSink,
+                eventHandler,
+                eventListener,
+                out
+            )
         }
     }
 
