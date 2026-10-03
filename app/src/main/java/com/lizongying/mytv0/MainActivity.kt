@@ -819,6 +819,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (event != null && event.repeatCount > 0) {
+            return super.onKeyDown(keyCode, event)
+        }
+
         if (onKey(keyCode)) {
             return true
         }

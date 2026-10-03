@@ -36,6 +36,7 @@
                 android:layout_gravity="end|bottom"
                 android:textColor="@color/white"
                 android:textStyle="normal"
+                android:layout_toEndOf="@id/content"
                 android:textSize="30sp"
                 tools:text="12:34:56" />
         </RelativeLayout>

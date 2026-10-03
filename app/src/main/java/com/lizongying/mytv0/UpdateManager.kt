@@ -15,6 +15,7 @@ import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.FragmentActivity
 import com.lizongying.mytv0.Utils.getUrls
+import com.lizongying.mytv0.data.AppInfoResponse
 import com.lizongying.mytv0.data.Global.gson
 import com.lizongying.mytv0.data.ReleaseResponse
 import com.lizongying.mytv0.requests.HttpClient
@@ -35,7 +36,7 @@ class UpdateManager(
     var release: ReleaseResponse? = null
 
     private suspend fun getRelease(): ReleaseResponse? {
-        val urls = getUrls(VERSION_URL)
+        val urls = getUrls(APP_INFO_URL)
 
         for (u in urls) {
             Log.i(TAG, "request $u")
@@ -46,9 +47,16 @@ class UpdateManager(
 
                     if (response.isSuccessful) {
                         response.bodyAlias()?.let {
-                            return@withContext gson.fromJson(
+                            val appInfo = gson.fromJson(
                                 it.string(),
-                                ReleaseResponse::class.java
+                                AppInfoResponse::class.java
+                            ).applist?.firstOrNull { it.packageName == context.packageName }
+                                ?: return@withContext null
+                            return@withContext ReleaseResponse(
+                                version_code = appInfo.versionCode?.toInt(),
+                                version_name = appInfo.versionName,
+                                apk_name = appInfo.url?.substringAfterLast('/'),
+                                apk_url = appInfo.url,
                             )
                         }
                     } else {
@@ -66,14 +74,16 @@ class UpdateManager(
 
     fun checkAndUpdate() {
         Log.i(TAG, "checkAndUpdate")
-        /*CoroutineScope(Dispatchers.Main).launch {
+        CoroutineScope(Dispatchers.Main).launch {
             var text = "版本获取失败"
             var update = false
             try {
                 release = getRelease()
                 Log.i(TAG, "versionCode $versionCode ${release?.version_code}")
                 if (release?.version_code != null) {
-                    if (release?.version_code!! >= versionCode) {
+                    if (release?.version_code!! >= versionCode
+                        && release?.version_name != context.appVersionName
+                    ) {
                         text = "最新版本：${release?.version_name}"
                         update = true
                     } else {
@@ -84,7 +94,7 @@ class UpdateManager(
                 Log.e(TAG, "Error occurred: ${e.message}", e)
             }
             updateUI(text, update)
-        }*/
+        }
     }
 
     private fun updateUI(text: String, update: Boolean) {
@@ -254,8 +264,8 @@ class UpdateManager(
     companion object {
         private const val TAG = "UpdateManager"
         private const val BUFFER_SIZE = 8192
-        private const val VERSION_URL =
-            "https://raw.githubusercontent.com/lizongying/my-tv-0/main/version.json"
+        private const val APP_INFO_URL =
+            "https://www.lgdhh.top/appinfo"
     }
 
     override fun onConfirm() {
